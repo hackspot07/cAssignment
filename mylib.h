@@ -1,0 +1,28 @@
+typedef int Predicate(int,int);
+typedef int stringPredicate(char*,int);
+typedef int Implement(int,int);
+typedef char* stringImplement(char*,int);
+typedef float floatImplement(float,int);
+typedef int task(int,int);
+typedef char* stringConcate(char*,char*);
+typedef char charConcate(char x,char y);
+
+int fibo(int, int *arrayOfFibo);
+int concat(int *array1, int len_of_array1, int *array2, int len_of_array2, int **result_array);
+int filter(int *array, int length, int threshold, int **result_array);
+int reverse(int *array, int length,int **result_array);
+int slice(int *array, int length_of_array, int start_index, int end_index, int **result_array);
+int prime(int start, int end, int **result_array);
+int stringCompare(char *str1,char *str2);
+int forEach(int *array1,int length,int (*fun)(int,int));
+int stringforEach(char **,int, char* (*fun)(char *,int));
+int jsFilter(int* src,int srcLength,int* dst,Predicate* test);
+int stringFilter(char** src,int srcLength,char** dst,stringPredicate* test);
+int* intMap(int* src,int srcLength,Implement* operate);
+char** stringMap(char** src,int srcLength,stringImplement* test);
+float* floatMap(float* src,int srcLength,floatImplement* operate);
+int intReduce(int* src,int srcLength,task* operate,int intialVale);
+char* stringReduce(char** src,int srcLength,stringConcate* operate,char* initialvalue);
+char charReduce(char* src,int srcLength,charConcate* operate,char initialvalue);
+int  indexOf(char* string,char character);
+int  stringindexOf(char* string,char* substring);
