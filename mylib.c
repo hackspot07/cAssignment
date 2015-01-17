@@ -225,14 +225,12 @@ int indexOf(char *string,char character){
 int stringindexOf(char *string,char* substring){
 	int index,stringLength,substringLength,i,count=0;
 	char* str = malloc(sizeof(char)*strlen(string)+1);
-	char* substr = malloc(sizeof(char)*strlen(string)+1);
 	strcpy(str,string);
-	strcpy(substr,substring);
 	stringLength = strlen(string);
 	substringLength = strlen(substring);
 	for(index=0;index<stringLength;index++){
 		for(i=0;i<substringLength;i++){
-			if(str[index+i]==substr[i]){
+			if(str[index+i]==substring[i]){
 				count++;
 				if(count==substringLength)
 					return index;

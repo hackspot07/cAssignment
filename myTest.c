@@ -236,12 +236,10 @@ void test_reduce_will_return_20(){
 
 
 char* stringConcat(char* x,char* y ){
-	char* intialString = malloc(sizeof(char)*strlen(intialString)+1);
-	char* stringFromArray = malloc(sizeof(char)*strlen(stringFromArray)+1);
-	strcpy(intialString,x);
-	strcpy(stringFromArray,y);
-	strcat(intialString,stringFromArray);
-	return intialString;
+	char* result = malloc(sizeof(char)*strlen(x)+strlen(y)+1);
+	strcpy(result,x);
+	strcat(result,y);
+	return result;
 };
 
 
