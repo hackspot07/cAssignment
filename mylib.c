@@ -114,11 +114,11 @@ int stringCompare(char *str1,char *str2){
 };
 
 
-int forEach(int *array,int length,int (*fun)(int,int)){
+int forEach(int *array,int length,int (*fun)(int,int,int*)){
 	int i;
 	int localArray[length]; 
 	for(i=0;i<length;i++){
-		localArray[i] = (*fun)(array[i],i);
+		localArray[i] = (*fun)(array[i],i,array);
 	};
 	for(i=0;i<length;i++){
 		if(localArray[i]!=array[i])
@@ -127,10 +127,10 @@ int forEach(int *array,int length,int (*fun)(int,int)){
 	return 1;
 };
 
-int stringforEach(char **array,int length,char* (*fun)(char *,int)){
+int stringforEach(char **array,int length,char* (*fun)(char *,int,char**)){
 	int i;
 	for(i=0;i<length;i++){
-		(*fun)(array[i],i);
+		(*fun)(array[i],i,array);
 	};
 	return i;
 };
@@ -139,7 +139,7 @@ int stringforEach(char **array,int length,char* (*fun)(char *,int)){
 int jsFilter(int* src,int srcLength,int* dst,Predicate* test){
 	int i,count=0;
 	for(i=0;i<srcLength;i++){
-		if(test(src[i],i)){ 
+		if(test(src[i],i,src)){ 
 			dst[count++] = src[i];
 		}
 	};
@@ -149,7 +149,7 @@ int jsFilter(int* src,int srcLength,int* dst,Predicate* test){
 int stringFilter(char **src,int srcLength,char** dst,stringPredicate* test){
 	int dstLength=0,i,yes;
 	for(i=0;i<srcLength;i++){
-		if(test(src[i],i)) 
+		if(test(src[i],i,src)) 
 			dst[dstLength++] = src[i];
 	};
 	return dstLength;
@@ -160,7 +160,7 @@ int* intMap(int* src,int srcLength,Implement operate){
 	int *dst;
 	dst = (int*)malloc(sizeof(int)*srcLength);
 	for(i=0;i<srcLength;i++){
-		dst[dstLength++] = operate(src[i],i);
+		dst[dstLength++] = operate(src[i],i,src);
 	};
 	return dst; 
 };
@@ -170,7 +170,7 @@ char** stringMap(char** src,int srcLength,stringImplement* test){
 	char** dst;
 	dst = (char**)malloc(sizeof(char*)*srcLength);
 	for(i=0;i<srcLength;i++){
-		dst[dstLength++] =  test(src[i],i);
+		dst[dstLength++] =  test(src[i],i,src);
 	};
 	return dst;
 };
@@ -181,7 +181,7 @@ float* floatMap(float* src,int srcLength,floatImplement* operate){
 	float* dst;
 	dst = (float*)malloc(sizeof(float)*srcLength);
 	for(i=0;i<srcLength;i++){
-		dst[dstLength++] =  operate(src[i],i);
+		dst[dstLength++] =  operate(src[i],i,src);
 	};
 	return dst;
 };
@@ -189,7 +189,7 @@ float* floatMap(float* src,int srcLength,floatImplement* operate){
 int intReduce(int* src,int srcLength,task* operate,int initialvalue){
 	int i,result;
 	for(i=0;i<srcLength;i++){ 
-		result = operate(initialvalue,src[i]);
+		result = operate(initialvalue,src[i],i,src);
 		initialvalue = result;
 	};
 	return initialvalue;
@@ -198,7 +198,7 @@ int intReduce(int* src,int srcLength,task* operate,int initialvalue){
 char* stringReduce(char** src,int srcLength,stringConcate* operate,char* initialvalue){
 	int i;
 	for(i=0;i<srcLength;i++){ 
-		initialvalue = operate(initialvalue,src[i]);
+		initialvalue = operate(initialvalue,src[i],i,src);
 	}
 	return initialvalue;
 };
@@ -206,7 +206,7 @@ char* stringReduce(char** src,int srcLength,stringConcate* operate,char* initial
 char charReduce(char* src,int srcLength,charConcate* operate,char initialvalue){
 	int i;
 	for(i=0;i<srcLength;i++){
-		initialvalue = operate(initialvalue,src[i]);
+		initialvalue = operate(initialvalue,src[i],i,src);
 	};
 	return initialvalue;
 };

@@ -27,7 +27,7 @@ void test_concanate_array1_array2__as_result_array(){
 };
 
 void test_filter_should_give_100_and_90_in_an_array(){
-	int *array,*result_array;
+	int *result_array;
 	int scores[]={100,90,80};
  	assertEqual(filter(scores,3,85,&result_array),2);
  	assertEqual(result_array[0],100);
@@ -121,26 +121,25 @@ void test_gives_hellllllllllloooo_and_hello_difference_is(){
 	assertEqual(stringCompare(str2,str1),-111);
 };
 
-int print (int x,int i) { 
+int print (int x,int i,int* array) { 
 	printf("value:\t%d\tIndex:%d\t\n",x+5,i);
 	return x;
 };
 
 void test_it_prints_1_2_3_4_5(){
-	int (*fun)(int,int);
-	int *array1,array[]={1,12,3,4,5};
-	fun = &print;
-	array1 = array;
-	assertEqual(forEach(array1,5,fun),1);
+	int (*fun)(int,int,int*);
+	int array[]={1,12,3,4,5};
+	fun = print;
+	assertEqual(forEach(array,5,fun),1);
 };
 
-char* printString(char *string,int length){
+char* printString(char *string,int length,char** array){
 	printf("%s\n",string);
 	return string;
 };
 
 void test_it_prints_a_b_c_d(){
-	char* (*fun)(char *,int);
+	char* (*fun)(char *,int,char**);
 	char string[] = {'a','b','\0'}; 
 	char string1[] = {'a','b','c','\0'}; 
 	char *array[] = {string,string1};
@@ -148,7 +147,7 @@ void test_it_prints_a_b_c_d(){
 	assertEqual(stringforEach(array,2,fun),2);
 };
 
-int isGreaterThan4(int x,int index){
+int isGreaterThan4(int x,int index,int* array){
 	return (x>4)?x:0;
 };
 
@@ -163,7 +162,7 @@ void test_filter_return_5_6_7(){
 	free(result_array);
 };
 
-int isNotEqual(char* x,int index){
+int isNotEqual(char* x,int index,char** array){
 	int yes;
 	yes = strcmp(x,"hi");
 	return (yes==0)?0:1;
@@ -181,7 +180,7 @@ void test_filter_return_lenth_3(){
 	free(result_array);
 };
 
-int multiplyBy2(int x,int index){
+int multiplyBy2(int x,int index,int* array){
 	return x*2;
 };
 
@@ -193,7 +192,7 @@ void test_map_returns_double_of_each_element(){
 	free(result_array);
 };
 
-char* changeString(char* x,int index){
+char* changeString(char* x,int index,char** array){
 	int i=0;
 	if(strcmp(x,"hiiiii")==0){
 		return x;
@@ -210,7 +209,7 @@ void test_map_return_lenth_6_after_and_change_hiiiii_string_by_hmmmmm(){
 	free(result_array);
 };
 
-float multiplyBy3(float x,int index){
+float multiplyBy3(float x,int index,float* array){
 	return x*3;
 };
 
@@ -223,7 +222,7 @@ void test_floatmap_returns_double_of_each_element(){
 	free(result_array);
 };
 
-int add(x,y){
+int add(int x,int y,int index,int* array){
 	return x+y;
 };
 
@@ -235,7 +234,7 @@ void test_reduce_will_return_20(){
 };
 
 
-char* stringConcat(char* x,char* y ){
+char* stringConcat(char* x,char* y,int index,char** array ){
 	char* result = malloc(sizeof(char)*strlen(x)+strlen(y)+1);
 	strcpy(result,x);
 	strcat(result,y);
@@ -251,7 +250,7 @@ void test_reduceString_it_retunr_the_concanate_string(){
 	assertEqual(strcmp(result,"TThihihihehe"),0);
 };
 
-char* maxLengthString(char* x,char* y ){
+char* maxLengthString(char* x,char* y,int index,char** array){
 	return (strlen(x)>strlen(y))?x:y;
 };
 
@@ -263,7 +262,7 @@ void test_reduceString_it_return_the_maxLength_string_parmatma(){
 	assertEqual(strcmp(result,"parmatma"),0);
 };
 
-char charConcat(char x,char y){
+char charConcat(char x,char y,int index,char* araray){
 	return (x>y)?x:y;
 };
 
