@@ -23,7 +23,7 @@ int concat(int *array1, int len_of_array1, int *array2, int len_of_array2, int *
 	result_array_len = len_of_array1+len_of_array2;
 	*result_array = (int *)malloc(sizeof(int)*result_array_len);
 	for(i=0;i<len_of_array1;i++){
-		(*result_array)[i] = array1[i];	
+		(*result_array)[i]=array1[i];	
 	}
 	for(i=len_of_array1;i<result_array_len;i++){
 		(*result_array)[i] = array2[j];
@@ -36,12 +36,11 @@ int filter(int *array, int length, int threshold, int **result_array){
 	int i,count=0;
 	for(i=0;i<length;i++){
 		if(array[i]>threshold){
+			(*result_array)[i]=array[i];
 			count++;
+			*result_array = realloc(*result_array,sizeof(int)*count);
 		};
 	};
-	*result_array = malloc(sizeof(int)*count);
-	for(i=0;i<count;i++)
-		(*result_array)[i]=array[i];
 	return count;
 };
 
@@ -136,21 +135,23 @@ int stringforEach(char **array,int length,char* (*fun)(char *,int,char**)){
 };
 
 
-int jsFilter(int* src,int srcLength,int* dst,Predicate* test){
+int intFilter(int* src,int srcLength,int** dst,Predicate* test){
 	int i,count=0;
 	for(i=0;i<srcLength;i++){
 		if(test(src[i],i,src)){ 
-			dst[count++] = src[i];
+			(*dst)[count++] = src[i];
+			*dst = realloc(*dst,sizeof(int)*count+1);
 		}
 	};
 	return count;
 };
 
-int stringFilter(char **src,int srcLength,char** dst,stringPredicate* test){
+int stringFilter(char **src,int srcLength,char*** dst,stringPredicate* test){
 	int dstLength=0,i,yes;
 	for(i=0;i<srcLength;i++){
 		if(test(src[i],i,src)) 
-			dst[dstLength++] = src[i];
+			(*dst)[dstLength++] = src[i];
+		(*dst) = realloc(*dst,sizeof(char*)*dstLength);
 	};
 	return dstLength;
 };

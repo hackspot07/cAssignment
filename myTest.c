@@ -27,8 +27,8 @@ void test_concanate_array1_array2__as_result_array_1_2_2_3(){
 };
 
 void test_filter_should_give_100_and_90_from_array_100_90_80(){
-	int *result_array;
 	int scores[]={100,90,80};
+	int *result_array = (int*)malloc(sizeof(int));
  	assertEqual(filter(scores,3,85,&result_array),2);
  	assertEqual(result_array[0],100);
  	assertEqual(result_array[1],90);
@@ -152,11 +152,9 @@ int isGreaterThan4(int x,int index,int* array){
 };
 
 void test_filter_return_5_6_7_from_the_array(){
-	int *result_array;
 	int array[6] = {2,3,4,5,6,7};
-	int resultLength;
-	result_array = (int*) malloc(sizeof(int)*6);
-	resultLength = jsFilter(array,6,result_array,isGreaterThan4);
+	int *result_array = (int*) malloc(sizeof(int));
+	int resultLength = intFilter(array,6,&result_array,isGreaterThan4);
 	assertEqual(resultLength,3);
 	assertEqual(result_array[0],5);
 	free(result_array);
@@ -172,8 +170,8 @@ void test_filter_return_lenth_3_after_filter_the_array(){
 	char **result_array;
 	char *array[] = {"hi","hi","hi","hello","hello","man"};
 	int resultLength;
-	result_array = (char**) malloc(sizeof(char*)*6);
-	resultLength = stringFilter(array,6,result_array,isNotEqual);
+	result_array = (char**) malloc(sizeof(char*));
+	resultLength = stringFilter(array,6,&result_array,isNotEqual);
 	assertEqual(resultLength,3);
 	assertEqual(strcmp(result_array[0],"hello"),0);
 	assertEqual(strcmp(result_array[2],"man"),0);
@@ -290,7 +288,7 @@ void test_stringindexOf_will_return_the_2_index_of_rma(){
 	assertEqual(index,2);
 };
 
-void test_stringindexOf_will_return_the_minus_3_index_of_ram(){
+void test_stringindexOf_will_return_the_3_index_of_ram(){
 	char* string = "hello";
 	char* substring = "lo";
 	int index;
